@@ -44,7 +44,7 @@ namespace GuessingGame
 
             // the secret number is not between 1 and max number (inclusive)
             // there is an error!
-            throw new ApplicationException("There is an issue somewhere!");
+            throw new ApplicationException("There is an issue somewhere! Is secret number set correctly?");
         }
 
     }
