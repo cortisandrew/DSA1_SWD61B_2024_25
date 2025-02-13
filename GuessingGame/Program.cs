@@ -3,15 +3,27 @@ using System.Diagnostics;
 
 int runs = 10; // the number of times the game is played when we want to take an average
 
-int maxSecretNumber = 100; // this is also the problem size, n (i.e. in this case the possible secret numbers to guess)
+// 2 ^ 30
+int maxSecretNumber = 1024 * 1024 * 1024; // this is also the problem size, n (i.e. in this case the possible secret numbers to guess)
 
-// TimeMeanGuessesAlgorithmA(runs, maxSecretNumber);
-
-SecretNumber secretNumber = new SecretNumber(maxSecretNumber, 3);
-AlgorithmA algorithmA = new AlgorithmA(secretNumber);
-(int, int) result = algorithmA.GuessNumber();
+SecretNumber secretNumber = new SecretNumber(maxSecretNumber);
+AlgorithmB algorithmB = new AlgorithmB(secretNumber);
+(int, int) result = algorithmB.GuessNumber();
 
 Console.WriteLine($"The secret number is {result.Item1} and we required {result.Item2} guesses");
+
+//int a = 900;
+//int b = 1000;
+
+//Console.WriteLine($"{a / b}");
+//Console.WriteLine($"{a/(double)b}");
+
+//// TimeMeanGuessesAlgorithmA(runs, maxSecretNumber);
+
+//SecretNumber secretNumber = new SecretNumber(maxSecretNumber, 3);
+//AlgorithmA algorithmA = new AlgorithmA(secretNumber);
+//(int, int) result = algorithmA.GuessNumber();
+
 
 static void TimeMeanGuessesAlgorithmA(int runs, int maxSecretNumber)
 {
