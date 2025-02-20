@@ -14,7 +14,7 @@ namespace ADTs_and_DSs.ABV
     /// <typeparam name="T">The data type of the elements that will be stored in the ABV</typeparam>
     public class ArrayBasedVector<T> : IVectorADT<T>
     {
-        private const int INITIAL_ARRAY_SIZE = 4;
+        private const int INITIAL_ARRAY_SIZE = 5;
 
         /// <summary>
         /// The array that will be used to store the elements of the Vector
@@ -64,7 +64,7 @@ namespace ADTs_and_DSs.ABV
         public T GetElementAtRank(int rank)
         {
             // Validation: check that the parameter rank is fine!
-            if (rank < 0 || rank >= count)
+            if (rank < 0 || rank > count)
             {
                 // there is no element to retrieve here!
                 throw new ArgumentOutOfRangeException(nameof(rank),
@@ -97,7 +97,7 @@ namespace ADTs_and_DSs.ABV
                 array = newArray;
             }
 
-            if (rank < 0 || rank > count)
+            if (rank < 0 || rank >= count)
             {
                 // there rank chosen is not acceptable!
                 throw new ArgumentOutOfRangeException(nameof(rank),
@@ -120,15 +120,44 @@ namespace ADTs_and_DSs.ABV
 
         public T RemoveElementAtRank(int rank)
         {
-            throw new NotImplementedException();
+            // Get the element at rank
+            T oldElement = GetElementAtRank(rank);
+
+            // array[rank] = default; // "delete" the element without doing anything
+
+            // Starting from position rank, up to count - 2 (inclusive)
+            for (int i = rank; i < count - 1; i++)
+            {
+                array[i] = array[i + 1];
+            }
+
+            array[count - 1] = default!;
+
+            count--;
+            return oldElement;
         }
 
         public T ReplaceElementAtRank(int rank, T newElement)
         {
             // Get the element at rank
+            T oldElement = GetElementAtRank(rank);
+
+            /* Alternatively you can re-implement the get...
+            if (rank < 0 || rank > count)
+            {
+                // there is no element to retrieve here!
+                throw new ArgumentOutOfRangeException(nameof(rank),
+                    $"The rank you provided as a parameter is outside of acceptable range! You can only pass ranks between 0 and {Count() - 1}, both inclusive (i.e. Count() - 1");
+            }
+
+            T oldElement = array[rank];
+            */
+
             // Update the element at the rank with the new element
+            array[rank] = newElement;
+
             // return the old element
-            throw new NotImplementedException();
+            return oldElement;
         }
 
         public override string ToString()

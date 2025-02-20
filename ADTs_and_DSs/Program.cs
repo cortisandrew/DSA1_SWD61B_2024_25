@@ -16,4 +16,13 @@ Console.WriteLine($"We have just replaced {arrayBasedVector.ReplaceElementAtRank
 
 Console.WriteLine(arrayBasedVector);
 
+arrayBasedVector.RemoveElementAtRank(2);
+
+Console.WriteLine(arrayBasedVector);
+
+arrayBasedVector.ReplaceElementAtRank(3, "Bob");
+
+Console.WriteLine(arrayBasedVector);
+Console.WriteLine(arrayBasedVector);
+
 
