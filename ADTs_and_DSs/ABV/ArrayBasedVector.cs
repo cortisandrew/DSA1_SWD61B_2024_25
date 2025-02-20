@@ -11,10 +11,10 @@ namespace ADTs_and_DSs.ABV
     /// The ArrayBasedVector is a data structure
     /// The ABV is a concrete implementation of an ADT (in this case, the VectorADT)
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The data type of the elements that will be stored in the ABV</typeparam>
     public class ArrayBasedVector<T> : IVectorADT<T>
     {
-        private const int INITIAL_ARRAY_SIZE = 8;
+        private const int INITIAL_ARRAY_SIZE = 4;
 
         /// <summary>
         /// The array that will be used to store the elements of the Vector
@@ -63,6 +63,7 @@ namespace ADTs_and_DSs.ABV
 
         public T GetElementAtRank(int rank)
         {
+            // Validation: check that the parameter rank is fine!
             if (rank < 0 || rank >= count)
             {
                 // there is no element to retrieve here!
@@ -78,7 +79,22 @@ namespace ADTs_and_DSs.ABV
             if (count == array.Length)
             {
                 // The array is now full, we cannot add the new element in the array that we have now
-                throw new NotImplementedException("We discuss this later...");
+            
+                // Create a new larger array
+                T[] newArray = new T[array.Length * 2]; // create a new array which is double the length of the old array
+
+                // copy everything over to the new array
+                array.CopyTo(newArray, 0); // equivalent to the code below...
+
+                /*
+                for (int i = 0; i < array.Length; i++)
+                {
+                    newArray[i] = array[i];
+                }
+                */
+
+                // replace the array with the new array
+                array = newArray;
             }
 
             if (rank < 0 || rank > count)
@@ -87,8 +103,6 @@ namespace ADTs_and_DSs.ABV
                 throw new ArgumentOutOfRangeException(nameof(rank),
                     $"The rank you provided as a parameter is outside of acceptable range! You can only pass ranks between 0 and {Count()}, both inclusive (i.e. Count()");
             }
-
-            // Will this work?!
 
             // starting from the position the last element (at position count - 1)
             // down to the location I want to free up (i = rank)
@@ -111,6 +125,9 @@ namespace ADTs_and_DSs.ABV
 
         public T ReplaceElementAtRank(int rank, T newElement)
         {
+            // Get the element at rank
+            // Update the element at the rank with the new element
+            // return the old element
             throw new NotImplementedException();
         }
 
