@@ -14,7 +14,7 @@ namespace ADTs_and_DSs.ABV
     /// <typeparam name="T">The data type of the elements that will be stored in the ABV</typeparam>
     public class ArrayBasedVector<T> : IVectorADT<T>
     {
-        private const int INITIAL_ARRAY_SIZE = 5;
+        private const int INITIAL_ARRAY_SIZE = 1024;
 
         /// <summary>
         /// The array that will be used to store the elements of the Vector
@@ -64,7 +64,7 @@ namespace ADTs_and_DSs.ABV
         public T GetElementAtRank(int rank)
         {
             // Validation: check that the parameter rank is fine!
-            if (rank < 0 || rank > count)
+            if (rank < 0 || rank >= count)
             {
                 // there is no element to retrieve here!
                 throw new ArgumentOutOfRangeException(nameof(rank),
@@ -76,10 +76,29 @@ namespace ADTs_and_DSs.ABV
 
         public void InsertElementAtRank(int rank, T element)
         {
-            if (count == array.Length)
+            InsertElementAtRankTwo(rank, element);
+        }
+
+        public int InsertElementAtRankTwo(int rank, T element)
+        {
+            int totalTimeTaken = 0;
+
+            totalTimeTaken++;
+            if (rank < 0 || rank > count)
+            {
+                // there rank chosen is not acceptable!
+                throw new ArgumentOutOfRangeException(nameof(rank),
+                    $"The rank you provided as a parameter is outside of acceptable range! You can only pass ranks between 0 and {Count()}, both inclusive (i.e. Count()");
+            }
+
+            totalTimeTaken++;
+            if (count == array.Length) // 1 time step
             {
                 // The array is now full, we cannot add the new element in the array that we have now
             
+                // since we have to copy array.Length items over in a loop, it takes a lot of time...
+                totalTimeTaken = totalTimeTaken + array.Length;
+
                 // Create a new larger array
                 T[] newArray = new T[array.Length * 2]; // create a new array which is double the length of the old array
 
@@ -94,28 +113,32 @@ namespace ADTs_and_DSs.ABV
                 */
 
                 // replace the array with the new array
+                totalTimeTaken++;
                 array = newArray;
             }
 
-            if (rank < 0 || rank >= count)
-            {
-                // there rank chosen is not acceptable!
-                throw new ArgumentOutOfRangeException(nameof(rank),
-                    $"The rank you provided as a parameter is outside of acceptable range! You can only pass ranks between 0 and {Count()}, both inclusive (i.e. Count()");
-            }
 
             // starting from the position the last element (at position count - 1)
             // down to the location I want to free up (i = rank)
+            totalTimeTaken++; // int i = count - 1
             for (int i = count - 1; i >= rank; i--)
             {
+                // i >= rank; i--
+                totalTimeTaken++;
+
                 // get the element at index i and place it in index i + 1
+                totalTimeTaken++;
                 array[i + 1] = array[i];
             }
 
             // place the new element at the correct position
+            totalTimeTaken++;
             array[rank] = element;
             // increase count (we are storing a new element)
+            totalTimeTaken++;
             count++;
+
+            return totalTimeTaken;
         }
 
         public T RemoveElementAtRank(int rank)
