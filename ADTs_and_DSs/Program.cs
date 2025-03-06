@@ -1,36 +1,26 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ADTs_and_DSs.ABV;
 using ADTs_and_DSs.Interfaces;
+using ADTs_and_DSs.LinkedListFolder;
 using ADTs_and_DSs.StackUsingABV;
 using System.Diagnostics;
 
 // ABV_Program();
 
-Stack_ABV<char> stack = new Stack_ABV<char>();
+// StackTest();
 
-string reversedString = "olleh";
+SinglyLinkedList<string> singlyLinkedList = new SinglyLinkedList<string>();
+singlyLinkedList.InsertFirst("C");
+singlyLinkedList.InsertFirst("B");
+singlyLinkedList.InsertFirst("A");
 
-for (int i = 0; i<reversedString.Length; i++)
+SinglyLinkedListNode<string> cursor = singlyLinkedList.Head;
+
+while (cursor != null)
 {
-    stack.Push(reversedString[i]);
+    Console.WriteLine(cursor.Element);
+    cursor = cursor.Next; // move forward one step
 }
-
-while (!stack.IsEmpty())
-{
-    Console.Write(stack.Pop());
-}
-Console.WriteLine();
-
-Stopwatch sw = new Stopwatch();
-
-for (int i = 0; i<10000000; i++)
-{
-    sw.Start();
-    stack.Push('a');
-    sw.Stop();
-}
-
-Console.WriteLine($"The total time for pushing 10000000 elements is {sw.ElapsedMilliseconds}ms ");
 
 
 
@@ -76,11 +66,13 @@ void ABV_Program()
 
     Console.Clear();
 
+    /*
     int time = arrayBasedVector.InsertElementAtRankTwo(0, "A");
     Console.WriteLine($"Inserting the value A at position 0, in an ABV of count {arrayBasedVector.Count()} took {time} time");
 
     time = arrayBasedVector.InsertElementAtRankTwo(arrayBasedVector.Count(), "B");
     Console.WriteLine($"Inserting the value B at the last position, in an ABV of count {arrayBasedVector.Count()} took {time} time");
+    
 
     Console.Clear();
 
@@ -105,4 +97,34 @@ void ABV_Program()
                                                                  // Console.WriteLine($"The time to prepend a new element in an ABV of count {countBeforeInsert} is {time} time");
         Console.WriteLine($"{countBeforeInsert}, {time}");
     }
+    */
+}
+
+static void StackTest()
+{
+    Stack_ABV<char> stack = new Stack_ABV<char>();
+
+    string reversedString = "olleh";
+
+    for (int i = 0; i < reversedString.Length; i++)
+    {
+        stack.Push(reversedString[i]);
+    }
+
+    while (!stack.IsEmpty())
+    {
+        Console.Write(stack.Pop());
+    }
+    Console.WriteLine();
+
+    Stopwatch sw = new Stopwatch();
+
+    for (int i = 0; i < 10000000; i++)
+    {
+        sw.Start();
+        stack.Push('a');
+        sw.Stop();
+    }
+
+    Console.WriteLine($"The total time for pushing 10000000 elements is {sw.ElapsedMilliseconds}ms ");
 }

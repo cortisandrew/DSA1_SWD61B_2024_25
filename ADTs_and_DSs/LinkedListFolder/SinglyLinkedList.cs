@@ -46,9 +46,24 @@ namespace ADTs_and_DSs.LinkedListFolder
             //return head == null;
         }
 
+        /// <summary>
+        /// Inserts a new element at the head of list
+        /// </summary>
+        /// <param name="element"></param>
         public void InsertFirst(T element)
         {
-            throw new NotImplementedException();
+            // Step (i) - build new data
+            SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<T>(element);
+
+            // Step (ii) - update the next of the new node to the "old" head of list
+            newNode.Next = head;
+
+            // Step (iii) - update the head of list
+            // This is a destructive step, because the old reference in the head is now lost!
+            head = newNode;
+
+            // Step (iv) - increment count
+            count++;
         }
 
         public void InsertLast(T element)
