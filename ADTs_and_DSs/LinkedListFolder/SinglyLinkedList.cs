@@ -24,7 +24,6 @@ namespace ADTs_and_DSs.LinkedListFolder
             get { return head; }
         }
 
-        /*
         /// <summary>
         /// The tail of list points towards the last SLL Node in the list, which stores
         /// the last element of the list (if it exists)
@@ -32,7 +31,6 @@ namespace ADTs_and_DSs.LinkedListFolder
         /// </summary>
         /// <remarks>I will need this and add the information later...</remarks>
          private SinglyLinkedListNode<T>? tail = null;
-        */
 
         /// <summary>
         /// Keeps track of the number of elements stored within the linked list
@@ -58,6 +56,14 @@ namespace ADTs_and_DSs.LinkedListFolder
             // Step (ii) - update the next of the new node to the "old" head of list
             newNode.Next = head;
 
+            if (head == null)
+            {
+                // currently, there are no nodes in the list
+                // the new node will be the only node in the list
+                // therefore it is BOTH the first and the last node
+                tail = newNode;
+            }
+
             // Step (iii) - update the head of list
             // This is a destructive step, because the old reference in the head is now lost!
             head = newNode;
@@ -81,11 +87,21 @@ namespace ADTs_and_DSs.LinkedListFolder
                 return; // return so that the code does not fall through
             }
 
+            /* This old method goes through all the nodes in the list: It is not needed if we have a reference to the tail
             // Step iii) Find the tail of the list
             while (cursor.Next != null) // while cursor is NOT the tail
             {
                 cursor = cursor.Next; // move one step forward
             }
+            */
+
+            /*
+            if (tail == null)
+            {
+                throw new ApplicationException("I have a bug in my code! Tail should NOT be null!");
+            }*/
+
+            cursor = tail!; // we know that the tail is not null, because there is at least one element!
 
             // cursor is the tail of the list!
 
@@ -93,7 +109,32 @@ namespace ADTs_and_DSs.LinkedListFolder
             InsertAfterNode(cursor, element); // Inserting after the tail, is equivalent to InsertLast
         }
 
-        public T RemoveFirst() { throw new NotImplementedException(); }
+        public T RemoveFirst() {
+            // if (count == 0)
+            if (head == null)
+            {
+                // the linked list is empty!
+                throw new InvalidOperationException("The list is empty, there is nothing to remove");
+            }
+
+            // head != null
+            T elementToReturn = head.Element;
+
+            head = head.Next; // head will now "skip" the first node
+
+            if (head == null)
+            {
+                // I have removed all of the elements from the list
+                // i.e. count == 0
+
+                // Since all the nodes are now removed,
+                // There is no tail
+                tail = null;
+            }
+
+            count--;
+            return elementToReturn;
+        }
 
         public T RemoveLast() {  throw new NotImplementedException(); }
 
@@ -114,6 +155,11 @@ namespace ADTs_and_DSs.LinkedListFolder
 
             // cursor might be the tail of list... if this is the case,
             // you will need to update the tail!
+            if (cursor.Next == null) // cursor == tail
+            {
+                // we are adding a new node AFTER the tail... therefore the new node is the tail!
+                tail = newNode;
+            }
 
             // Step iii) add the new node to the linked list
             cursor.Next = newNode;

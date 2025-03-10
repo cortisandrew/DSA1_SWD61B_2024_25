@@ -2,6 +2,7 @@
 using ADTs_and_DSs.ABV;
 using ADTs_and_DSs.Interfaces;
 using ADTs_and_DSs.LinkedListFolder;
+using ADTs_and_DSs.QueueUsingLinkedList;
 using ADTs_and_DSs.StackUsingABV;
 using System.Diagnostics;
 
@@ -21,6 +22,26 @@ while (cursor != null)
     Console.WriteLine(cursor.Element);
     cursor = cursor.Next; // move forward one step
 }
+
+Queue_LinkedList<int> queue = new Queue_LinkedList<int>();
+
+int elementsToEnqueue = 100000;
+
+Stopwatch sw = new Stopwatch();
+sw.Start();
+for (int i = 0; i < elementsToEnqueue; i++)
+{
+    queue.Enqueue(i);
+}
+
+while (queue.Count > 0)
+{
+    queue.Dequeue();
+}
+sw.Stop();
+Console.WriteLine(sw.ElapsedMilliseconds);
+// About 20 seconds with inefficient implementation!
+
 
 
 
