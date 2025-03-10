@@ -68,7 +68,29 @@ namespace ADTs_and_DSs.LinkedListFolder
 
         public void InsertLast(T element)
         {
-            throw new NotImplementedException();
+            // The current implementation "assumes" that I don't have a tail reference
+
+            // Step i) get the head of list and refer to it as cursor
+            SinglyLinkedListNode<T> cursor = head;
+
+            // Step ii) Check for special case: empty linked list
+            if (cursor == null) // Head was null because linked list was empty
+            {
+                InsertFirst(element); // Since there are currently no elements,
+                                      // the new element will be both the first and last element
+                return; // return so that the code does not fall through
+            }
+
+            // Step iii) Find the tail of the list
+            while (cursor.Next != null) // while cursor is NOT the tail
+            {
+                cursor = cursor.Next; // move one step forward
+            }
+
+            // cursor is the tail of the list!
+
+            // Step iv) Now that I have the tail of list
+            InsertAfterNode(cursor, element); // Inserting after the tail, is equivalent to InsertLast
         }
 
         public T RemoveFirst() { throw new NotImplementedException(); }
@@ -78,7 +100,26 @@ namespace ADTs_and_DSs.LinkedListFolder
 
         public void InsertAfterNode(SinglyLinkedListNode<T> cursor, T element)
         {
-            throw new NotImplementedException();
+            // Validation: this parameter value does not make sense!
+            if (cursor == null)
+            {
+                throw new ArgumentNullException(nameof(cursor), "You cannot insert after a null!");
+            }
+
+            // Step i) Create the new node
+            SinglyLinkedListNode<T> newNode = new SinglyLinkedListNode<T>(element);
+
+            // Step ii) Update the new node's next
+            newNode.Next = cursor.Next;
+
+            // cursor might be the tail of list... if this is the case,
+            // you will need to update the tail!
+
+            // Step iii) add the new node to the linked list
+            cursor.Next = newNode;
+
+            // Step iv) increment count
+            count++;
         }
 
         public T RemoveAfterNode(SinglyLinkedListNode<T> cursor)
