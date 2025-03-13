@@ -6,46 +6,65 @@ using ADTs_and_DSs.QueueUsingLinkedList;
 using ADTs_and_DSs.StackUsingABV;
 using System.Diagnostics;
 
+
 // ABV_Program();
 
 // StackTest();
 
-SinglyLinkedList<string> singlyLinkedList = new SinglyLinkedList<string>();
-singlyLinkedList.InsertFirst("C");
-singlyLinkedList.InsertFirst("B");
-singlyLinkedList.InsertFirst("A");
+// TestingLinkedList();
 
-//SinglyLinkedListNode<string> cursor = singlyLinkedList.Head;
+// Start Empirical Analysis for Queue
 
-//while (cursor != null)
-//{
-//    Console.WriteLine(cursor.Element);
-//    cursor = cursor.Next; // move forward one step
-//}
+// Create a list of problem sizes to measure (this is the x-axis)
+// Remember in many algorithms, the problem size affects the time
+// You are interested in how the time reacts when the problem size increases
+int[] problemSizes = new int[] { 10, 20, 100, 200, 10000, 100000 };
 
-Console.WriteLine(singlyLinkedList);
+// The number of measurements for each problem size
+int repetitions = 20;
 
+Stopwatch stopwatch = new Stopwatch();
 
+// Setup and run the problem once, without keeping its timing
 Queue_LinkedList<int> queue = new Queue_LinkedList<int>();
-
-int elementsToEnqueue = 100000;
-
-Stopwatch sw = new Stopwatch();
-sw.Start();
-for (int i = 0; i < elementsToEnqueue; i++)
+for (int i = 0; i < 1000; i++)
 {
+    stopwatch.Start();
     queue.Enqueue(i);
+    stopwatch.Stop();
 }
+// The above will allow the program to run once, and the very large time at the beginning will not be so large
 
-while (queue.Count > 0)
+Console.WriteLine("n, Time in ticks");
+foreach(int problemSize in problemSizes)
 {
-    queue.Dequeue();
-}
-sw.Stop();
-Console.WriteLine(sw.ElapsedMilliseconds);
-// About 20 seconds with inefficient implementation!
+    stopwatch.Reset(); // reset the stopwatch to 0 time
 
-// Exercise: Implement the Stack using a linked list
+    // repeat a number of repetitions
+    for (int j = 0; j < repetitions; j++)
+    {
+        // setup the scenario
+
+        // example, let's create a queue with problemSize number of elements (problemSize is also called n sometimes)
+        queue = new Queue_LinkedList<int>();
+        for (int i = 0; i < problemSize; i++)
+        {
+            queue.Enqueue(i);
+        }
+
+        // setup is complete
+
+
+        // this is the algorithm that I want to measure its speed
+        stopwatch.Start();
+        queue.Enqueue(0);
+        stopwatch.Stop();
+    }
+
+    // return the average time over all the repetitions
+    Console.WriteLine($"{problemSize}, {stopwatch.ElapsedTicks/(double)repetitions}");
+}
+
 
 
 
@@ -153,4 +172,44 @@ static void StackTest()
     }
 
     Console.WriteLine($"The total time for pushing 10000000 elements is {sw.ElapsedMilliseconds}ms ");
+}
+
+static void TestingLinkedList()
+{
+    SinglyLinkedList<string> singlyLinkedList = new SinglyLinkedList<string>();
+    singlyLinkedList.InsertFirst("C");
+    singlyLinkedList.InsertFirst("B");
+    singlyLinkedList.InsertFirst("A");
+
+    //SinglyLinkedListNode<string> cursor = singlyLinkedList.Head;
+
+    //while (cursor != null)
+    //{
+    //    Console.WriteLine(cursor.Element);
+    //    cursor = cursor.Next; // move forward one step
+    //}
+
+    Console.WriteLine(singlyLinkedList);
+
+
+    Queue_LinkedList<int> queue = new Queue_LinkedList<int>();
+
+    int elementsToEnqueue = 100000;
+
+    Stopwatch sw = new Stopwatch();
+    sw.Start();
+    for (int i = 0; i < elementsToEnqueue; i++)
+    {
+        queue.Enqueue(i);
+    }
+
+    while (queue.Count > 0)
+    {
+        queue.Dequeue();
+    }
+    sw.Stop();
+    Console.WriteLine(sw.ElapsedMilliseconds);
+    // About 20 seconds with inefficient implementation!
+
+    // Exercise: Implement the Stack using a linked list
 }
