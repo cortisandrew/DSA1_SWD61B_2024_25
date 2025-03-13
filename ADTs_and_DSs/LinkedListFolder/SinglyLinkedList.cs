@@ -136,7 +136,64 @@ namespace ADTs_and_DSs.LinkedListFolder
             return elementToReturn;
         }
 
-        public T RemoveLast() {  throw new NotImplementedException(); }
+        /// <summary>
+        /// Remove the tail of the list
+        /// Return the element found in the tail
+        /// Update the references to the tail (and possibly the head of list)
+        /// </summary>
+        /// <returns></returns>
+        public T RemoveLast() {
+
+            // Case (i) - no elements. This is the only time that tail should be null!
+            // if (count == 0)
+            if (head == null)
+            {
+                // the linked list is empty!
+                throw new InvalidOperationException("The list is empty, there is nothing to remove");
+            }
+
+            // Case (ii)
+            // There is only one node in the linked list
+            // Count == 1
+            // Head == Tail (there is only one node and therefore, the node is BOTH the head and tail of list
+            if (head == tail)
+            {
+                return RemoveFirst(); // this case is already solved in the RemoveFirst operation
+            }
+
+            // Case (iii)
+            // There are multiple nodes in the list (count > 1)
+            T elementToReturn = tail!.Element; // We know that the tail is not null!
+
+            SinglyLinkedListNode<T> cursor = head; // we know that cursor does NOT start off as null
+            // we would like the cursor to point towards the node that is previous to the tail
+            // i.e. we want cursor.Next == tail
+
+            // while the cursor is NOT the node that is previous to the tail
+            while(cursor!.Next != tail)
+            {
+                cursor = cursor.Next!; // move forward until we find the node we are looking for
+
+                if ( cursor == null || cursor.Next == null)
+                {
+                    // this can only happen if there is an issue with the code somewhere
+                    // this case should NOT happen...
+                    throw new ApplicationException("There is a bug in some operation that needs to be fixed!");
+                }
+            }
+
+            // the cursor is now the previous of the tail
+            // after removing the tail, the cursor is the new tail
+            cursor.Next = null;
+            tail = cursor;
+
+            // remember to reduce the count (we have removed one node!)
+            count--;
+
+            // return the element we need
+            return elementToReturn;
+
+        }
 
 
         public void InsertAfterNode(SinglyLinkedListNode<T> cursor, T element)
@@ -170,14 +227,50 @@ namespace ADTs_and_DSs.LinkedListFolder
 
         public T RemoveAfterNode(SinglyLinkedListNode<T> cursor)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("Exercise");
         }
 
         public void InsertBeforeNode(SinglyLinkedListNode<T> cursor, T element)
         {
-            throw new NotImplementedException();
+            /*
+            if (cursor.LinkedList != this)
+            {
+                // the cursor is not an element of this linked list!
+                // You cannot add to this linked list with this cursor!
+            }
+            */
+
+            throw new NotImplementedException("Exercise");
         }
 
+        /// <summary>
+        /// Go over each node, one after the other and take a copy of the elements
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("[ ");
+            // Store all the elements here...
+            List<T> arrayBasedVector = new List<T>();
+
+            // starting from the first node in the list
+            SinglyLinkedListNode<T>? cursor = head;
+
+            // go over each and every node in the list
+            while (cursor != null)
+            {
+                // copy the element over
+                arrayBasedVector.Add(cursor.Element);
+                
+                // move forward one step
+                cursor = cursor.Next;
+            }
+            sb.Append(String.Join(", ", arrayBasedVector));
+            sb.Append("] ");
+            return sb.ToString();
+        }
 
 
     }

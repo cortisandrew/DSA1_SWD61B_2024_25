@@ -15,13 +15,16 @@ singlyLinkedList.InsertFirst("C");
 singlyLinkedList.InsertFirst("B");
 singlyLinkedList.InsertFirst("A");
 
-SinglyLinkedListNode<string> cursor = singlyLinkedList.Head;
+//SinglyLinkedListNode<string> cursor = singlyLinkedList.Head;
 
-while (cursor != null)
-{
-    Console.WriteLine(cursor.Element);
-    cursor = cursor.Next; // move forward one step
-}
+//while (cursor != null)
+//{
+//    Console.WriteLine(cursor.Element);
+//    cursor = cursor.Next; // move forward one step
+//}
+
+Console.WriteLine(singlyLinkedList);
+
 
 Queue_LinkedList<int> queue = new Queue_LinkedList<int>();
 
@@ -41,6 +44,8 @@ while (queue.Count > 0)
 sw.Stop();
 Console.WriteLine(sw.ElapsedMilliseconds);
 // About 20 seconds with inefficient implementation!
+
+// Exercise: Implement the Stack using a linked list
 
 
 

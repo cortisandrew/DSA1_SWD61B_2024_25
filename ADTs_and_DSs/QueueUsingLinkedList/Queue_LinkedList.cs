@@ -25,6 +25,11 @@ namespace ADTs_and_DSs.QueueUsingLinkedList
             // The following method, will be inefficient using a Singly Linked List
             // You would need a doubly linked list to work with this!
             // return singlyLinkedList.RemoveLast();
+
+
+            // If you implement using:
+            // return singlyLinkedList.RemoveLast();
+            // The operation for Dequeue will be slow!
         }
 
         public void Enqueue(T element)
