@@ -2,6 +2,7 @@
 using ADTs_and_DSs.ABV;
 using ADTs_and_DSs.Interfaces;
 using ADTs_and_DSs.LinkedListFolder;
+using ADTs_and_DSs.QueueUsingABV;
 using ADTs_and_DSs.QueueUsingLinkedList;
 using ADTs_and_DSs.StackUsingABV;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ using System.Diagnostics;
 // Create a list of problem sizes to measure (this is the x-axis)
 // Remember in many algorithms, the problem size affects the time
 // You are interested in how the time reacts when the problem size increases
-int[] problemSizes = new int[] { 10, 20, 100, 200, 10000, 100000 };
+int[] problemSizes = new int[] { 10, 20, 100, 200, 10000, 50000, 100000 };
 
 // The number of measurements for each problem size
 int repetitions = 20;
@@ -27,14 +28,25 @@ Stopwatch stopwatch = new Stopwatch();
 
 // Setup and run the problem once, without keeping its timing
 Queue_LinkedList<int> queue = new Queue_LinkedList<int>();
+Queue_ABV<int> queueABV = new Queue_ABV<int>();
+
 for (int i = 0; i < 1000; i++)
 {
     stopwatch.Start();
     queue.Enqueue(i);
+    queueABV.Enqueue(i);
     stopwatch.Stop();
 }
+
+for (int i = 0; i < 1000; i++)
+{
+    queue.Dequeue();
+    queueABV.Dequeue();
+}
+
 // The above will allow the program to run once, and the very large time at the beginning will not be so large
 
+Console.WriteLine("Queue using linked lists");
 Console.WriteLine("n, Time in ticks");
 foreach(int problemSize in problemSizes)
 {
@@ -55,9 +67,9 @@ foreach(int problemSize in problemSizes)
         // setup is complete
 
 
-        // this is the algorithm that I want to measure its speed
+        // this is the algorithm that I want to measure its speed (dequeue)
         stopwatch.Start();
-        queue.Enqueue(0);
+        queue.Dequeue();
         stopwatch.Stop();
     }
 
@@ -65,6 +77,37 @@ foreach(int problemSize in problemSizes)
     Console.WriteLine($"{problemSize}, {stopwatch.ElapsedTicks/(double)repetitions}");
 }
 
+
+Console.WriteLine("Queue using ABV");
+Console.WriteLine("n, Time in ticks");
+foreach (int problemSize in problemSizes)
+{
+    stopwatch.Reset(); // reset the stopwatch to 0 time
+
+    // repeat a number of repetitions
+    for (int j = 0; j < repetitions; j++)
+    {
+        // setup the scenario
+
+        // example, let's create a queue with problemSize number of elements (problemSize is also called n sometimes)
+        queueABV = new Queue_ABV<int>();
+        for (int i = 0; i < problemSize; i++)
+        {
+            queueABV.Enqueue(i);
+        }
+
+        // setup is complete
+
+
+        // this is the algorithm that I want to measure its speed (dequeue)
+        stopwatch.Start();
+        queueABV.Dequeue();
+        stopwatch.Stop();
+    }
+
+    // return the average time over all the repetitions
+    Console.WriteLine($"{problemSize}, {stopwatch.ElapsedTicks / (double)repetitions}");
+}
 
 
 
