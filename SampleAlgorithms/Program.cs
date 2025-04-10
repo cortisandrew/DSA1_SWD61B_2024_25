@@ -25,3 +25,21 @@ int H(int n)
 
     return sum;
 }
+
+
+/// <remarks>Method only works for positive values of n</remarks>
+int Factorial(int n)
+{
+    // Stopping condition: immediately return the answer for a simple case
+    if (n == 0 || n == 1)
+    {
+        return 1;
+    }
+
+    // A recursive method will make a recursive call
+    // i.e. it will call itself (possibly multiple times) with a "simpler" parameter (i.e. less time until we hit the stopping condition)
+    int factorial_n_minus_1 = Factorial(n - 1);
+    // factorial_n_minus_1 = Factorial(n - 1);
+
+    return n * factorial_n_minus_1; // often you also have some additional work
+}
