@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleAlgorithms", "SampleA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SortingAlgorithms", "SortingAlgorithms\SortingAlgorithms.csproj", "{5A283935-57DC-4662-B98D-4D009D2BD0CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeDataStructures", "TreeDataStructures\TreeDataStructures.csproj", "{EE876FFC-60F1-4FAC-8BEE-E1535E9EC2E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreeDataStructures", "TreeDataStructures\TreeDataStructures.csproj", "{EE876FFC-60F1-4FAC-8BEE-E1535E9EC2E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRNG", "PRNG\PRNG.csproj", "{12408F07-F79C-48F6-B753-F5FF9073D089}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{EE876FFC-60F1-4FAC-8BEE-E1535E9EC2E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE876FFC-60F1-4FAC-8BEE-E1535E9EC2E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE876FFC-60F1-4FAC-8BEE-E1535E9EC2E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12408F07-F79C-48F6-B753-F5FF9073D089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12408F07-F79C-48F6-B753-F5FF9073D089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12408F07-F79C-48F6-B753-F5FF9073D089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12408F07-F79C-48F6-B753-F5FF9073D089}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
