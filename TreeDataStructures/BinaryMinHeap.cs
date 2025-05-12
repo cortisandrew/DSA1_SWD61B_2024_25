@@ -12,6 +12,11 @@ namespace TreeDataStructures
     {
         private List<int> arrayBasedVector = new List<int>();
 
+        public bool IsEmpty()
+        {
+            return arrayBasedVector.Count == 0;
+        }
+
         private int LeftChildIndex(int parentIndex)
         {
             return (parentIndex * 2) + 1;

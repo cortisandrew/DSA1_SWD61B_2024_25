@@ -21,5 +21,12 @@ namespace TreeDataStructures
             array[i] = array[j];
             array[j] = temp;
         }
+
+        public static void Swap<T>(this T[] array, int i, int j)
+        {
+            T temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
     }
 }

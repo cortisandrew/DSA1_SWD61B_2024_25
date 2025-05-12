@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreeDataStructures;
 
 namespace SortingAlgorithms
 {
@@ -109,6 +110,98 @@ namespace SortingAlgorithms
             }
 
             return output;
+        }
+
+        public int[] HeapSort(int[] array)
+        {
+            BinaryMinHeap heap = new BinaryMinHeap();
+            int[] output = new int[array.Length];
+            foreach (int i in array)
+            {
+                heap.Add(i);
+            }
+
+            int j = 0;
+            while (!heap.IsEmpty())
+            {
+                output[j] = heap.RemoveMin();
+                j++;
+            }
+
+            return output;
+        }
+
+        public void QuickSort(int[] array)
+        {
+            // Quicksort the array between 0 and length - 1 (inclusive)
+            QuickSort(array, 0, array.Length - 1);
+        }
+
+        /// <summary>
+        /// Quicksort the array between lo and hi (inclusive)
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="lo"></param>
+        /// <param name="hi"></param>
+        private void QuickSort(int[] array, int lo, int hi)
+        {
+            // Step 0: Stopping condition
+            if (hi <= lo)
+            {
+                // stopping condition - nothing left to sort
+                return;
+            }
+
+            // step 1: Select the pivot
+            // step 2: Partiotion around the pivot
+            int pivotIndex = SelectPivotAndPartition(array, lo, hi);
+
+            // step 3: Call quicksort recursively
+            QuickSort(array, lo, pivotIndex - 1);
+            QuickSort(array, pivotIndex + 1, hi);
+        }
+
+        private int SelectPivotAndPartition(int[] array, int lo, int hi)
+        {
+            /* If you uncomment this section, you will be selecting a pivot at random
+            // Select a random element between lo and hi (both inclusive),
+            // swap with the left
+            array.Swap(Random.Shared.Next(lo, hi + 1), lo);
+            */
+            int pivotIndex = lo; // leftmost pivot
+            int pivotValue = array[pivotIndex];
+
+            // custom partitioning scheme
+            // not very good because I have to copy ALL the elements outside of the array
+            List<int> smallerOrEqualValues = new List<int>();
+            List<int> largerValues = new List<int>();
+
+            for (int i = lo; i <= hi; i++) {
+                if (i == pivotIndex)
+                {
+                    // don't copy the pivot to the other arrays! Otherwise we add this twice!
+                    continue;
+                }
+
+                if (array[i] > pivotValue)
+                {
+                    // value at position i is LARGER than the pivot
+                    largerValues.Add(array[i]);
+                }
+                else
+                {
+                    // smaller than or equal to value of pivot
+                    smallerOrEqualValues.Add(array[i]);
+                }
+            }
+
+            // copy everything back in order: smaller than pivot, pivot, larger than pivot
+            smallerOrEqualValues.CopyTo(array, lo); // copy the smaller values first!
+            int  finalPivotIndex = lo + smallerOrEqualValues.Count; // this is the position for pivot to be placed
+            array[finalPivotIndex] = pivotValue;
+            largerValues.CopyTo(array, finalPivotIndex + 1);
+
+            return finalPivotIndex;
         }
     }
 }
