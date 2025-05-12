@@ -49,12 +49,16 @@ namespace PRNG
         /// <remarks>For a die roll, call Next(1, 7)</remarks>
         public int Next(int min, int max)
         {
+            // Can improva again using "rejection sampling"
+
             int diff = max - min;
 
             int r_1 = (diff * Next()) / m;
 
             return r_1 + min;
 
+
+            
             // inferior code
             // the code below can introduce a bias in your output
             // return (Next() % (max - min)) + min;
